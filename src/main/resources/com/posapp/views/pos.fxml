@@ -6,33 +6,59 @@
 
 <HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.posapp.controller.PosController"
-      spacing="16" stylesheets="@../styles/main.css">
+      spacing="14" stylesheets="@../styles/main.css">
 
-    <!-- Left Column: Search & Cart Table (65%) -->
-    <VBox spacing="12" HBox.hgrow="ALWAYS">
+    <!-- Column 1: Katalog Produk Cepat (35%) -->
+    <VBox spacing="10" prefWidth="380" styleClass="card">
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Label text="📦 Katalog Produk" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Klik ➕ untuk tambah" style="-fx-text-fill: #64748B; -fx-font-size: 11px;"/>
+        </HBox>
+        <TextField fx:id="txtCatalogSearch" promptText="Cari nama produk / barcode / kategori..."/>
+        
+        <TableView fx:id="tblCatalog" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colCatalogName" text="Nama Produk" prefWidth="140"/>
+                <TableColumn fx:id="colCatalogPrice" text="Harga" prefWidth="85"/>
+                <TableColumn fx:id="colCatalogStock" text="Stok" prefWidth="45"/>
+                <TableColumn fx:id="colCatalogAction" text="Pilih" prefWidth="75"/>
+            </columns>
+            <placeholder>
+                <Label text="Tidak ada produk ditemukan"/>
+            </placeholder>
+        </TableView>
+    </VBox>
+
+    <!-- Column 2: Keranjang Belanja (40%) -->
+    <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="card">
         <!-- Barcode Search Bar -->
-        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="card">
-            <Label text="Scan Barcode / Cari:" style="-fx-font-weight: bold;"/>
-            <TextField fx:id="txtSearch" promptText="Scan barcode atau ketik nama produk [F1]..." onAction="#handleSearchProduct" HBox.hgrow="ALWAYS"/>
-            <Button text="Tambah ke Keranjang" onAction="#handleSearchProduct" styleClass="btn-primary"/>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Scan Barcode:" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="txtSearch" promptText="Scan barcode atau ketik nama [F1]..." onAction="#handleSearchProduct" HBox.hgrow="ALWAYS"/>
+            <Button text="Tambah" onAction="#handleSearchProduct" styleClass="btn-primary"/>
         </HBox>
 
         <!-- Cart Table -->
         <TableView fx:id="tblCart" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colBarcode" text="Barcode" prefWidth="130"/>
-                <TableColumn fx:id="colName" text="Nama Produk" prefWidth="250"/>
-                <TableColumn fx:id="colPrice" text="Harga Satuan" prefWidth="110"/>
-                <TableColumn fx:id="colQty" text="Qty" prefWidth="60"/>
-                <TableColumn fx:id="colSubtotal" text="Subtotal" prefWidth="120"/>
+                <TableColumn fx:id="colBarcode" text="Barcode" prefWidth="95"/>
+                <TableColumn fx:id="colName" text="Nama Produk" prefWidth="150"/>
+                <TableColumn fx:id="colPrice" text="Harga" prefWidth="85"/>
+                <TableColumn fx:id="colQty" text="Qty" prefWidth="45"/>
+                <TableColumn fx:id="colSubtotal" text="Subtotal" prefWidth="90"/>
+                <TableColumn fx:id="colCartAction" text="Aksi (+/-)" prefWidth="85"/>
             </columns>
+            <placeholder>
+                <Label text="Keranjang belanja masih kosong"/>
+            </placeholder>
         </TableView>
 
         <!-- Cart Actions -->
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Button text="➕ Tambah (+1)" onAction="#handleIncreaseQty" styleClass="btn-secondary"/>
-            <Button text="➖ Kurang (-1)" onAction="#handleDecreaseQty" styleClass="btn-secondary"/>
-            <Button text="🗑 Hapus Item" onAction="#handleRemoveItem" styleClass="btn-danger"/>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Button text="➕ (+1)" onAction="#handleIncreaseQty" styleClass="btn-secondary"/>
+            <Button text="➖ (-1)" onAction="#handleDecreaseQty" styleClass="btn-secondary"/>
+            <Button text="🗑 Hapus" onAction="#handleRemoveItem" styleClass="btn-danger"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Button text="Batal Transaksi" onAction="#handleClearCart" styleClass="btn-secondary"/>
         </HBox>
@@ -40,8 +66,8 @@
         <Label fx:id="lblMessage" text="" style="-fx-text-fill: #DC2626; -fx-font-weight: bold;"/>
     </VBox>
 
-    <!-- Right Column: Payment Panel (35%) -->
-    <VBox spacing="16" prefWidth="350" styleClass="card">
+    <!-- Column 3: Payment Panel (25%) -->
+    <VBox spacing="14" prefWidth="320" styleClass="card">
         <Label text="TOTAL TAGIHAN" styleClass="metric-title"/>
         <Label fx:id="lblGrandTotal" text="Rp 0" styleClass="grand-total-display"/>
 
@@ -64,7 +90,7 @@
             <Label text="Uang Tunai Diterima:" style="-fx-font-weight: bold;"/>
             <TextField fx:id="txtAmountPaid" promptText="Masukkan nominal bayar..."/>
 
-            <FlowPane hgap="8" vgap="8">
+            <FlowPane hgap="6" vgap="6">
                 <Button text="Uang Pas" onAction="#handleQuickCash" styleClass="btn-secondary"/>
                 <Button text="10.000" onAction="#handleQuickCash" styleClass="btn-secondary"/>
                 <Button text="20.000" onAction="#handleQuickCash" styleClass="btn-secondary"/>
@@ -76,14 +102,13 @@
         <!-- Change Amount Display -->
         <VBox spacing="4" style="-fx-background-color: #F1F5F9; -fx-padding: 10; -fx-background-radius: 6;">
             <Label text="Uang Kembalian:" styleClass="metric-title"/>
-            <Label fx:id="lblChange" text="Rp 0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2563EB;"/>
+            <Label fx:id="lblChange" text="Rp 0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563EB;"/>
         </VBox>
 
         <Region VBox.vgrow="ALWAYS"/>
 
         <!-- Checkout Button -->
-        <Button text="✅ BAYAR &amp; CETAK NOTA [Enter]" onAction="#handleProcessCheckout" maxWidth="Infinity" prefHeight="50" styleClass="btn-success" style="-fx-font-size: 14px;"/>
+        <Button text="✅ BAYAR &amp; NOTA" onAction="#handleProcessCheckout" maxWidth="Infinity" prefHeight="45" styleClass="btn-success" style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
     </VBox>
 
 </HBox>
-

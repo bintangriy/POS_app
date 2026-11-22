@@ -15,7 +15,10 @@
 
     <VBox spacing="4">
         <Label text="Barcode Produk (Unik):"/>
-        <TextField fx:id="txtBarcode" promptText="misal: 8991234567890"/>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <TextField fx:id="txtBarcode" promptText="misal: 8991234567890" HBox.hgrow="ALWAYS"/>
+            <Button text="➕ Auto Barcode" onAction="#handleGenerateBarcode" styleClass="btn-secondary"/>
+        </HBox>
     </VBox>
 
     <VBox spacing="4">

@@ -32,6 +32,16 @@ public class ProductDialogController {
         }
     }
 
+    @FXML
+    public void handleGenerateBarcode() {
+        String newBarcode;
+        do {
+            long rand = (long) (Math.random() * 9000000000L) + 1000000000L;
+            newBarcode = "899" + rand;
+        } while (productService.getProductByBarcode(newBarcode) != null);
+        txtBarcode.setText(newBarcode);
+    }
+
     public void setProduct(Product product) {
         this.existingProduct = product;
         if (product != null) {

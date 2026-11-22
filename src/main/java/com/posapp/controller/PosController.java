@@ -8,11 +8,14 @@ import com.posapp.util.UserSession;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,6 +23,15 @@ import java.io.IOException;
 
 public class PosController {
 
+    // Katalog Produk Cepat
+    @FXML private TextField txtCatalogSearch;
+    @FXML private TableView<Product> tblCatalog;
+    @FXML private TableColumn<Product, String> colCatalogName;
+    @FXML private TableColumn<Product, String> colCatalogPrice;
+    @FXML private TableColumn<Product, String> colCatalogStock;
+    @FXML private TableColumn<Product, Void> colCatalogAction;
+
+    // Scan Barcode & Keranjang Belanja
     @FXML private TextField txtSearch;
     @FXML private TableView<TransactionItem> tblCart;
     @FXML private TableColumn<TransactionItem, String> colBarcode;
@@ -27,7 +39,9 @@ public class PosController {
     @FXML private TableColumn<TransactionItem, String> colPrice;
     @FXML private TableColumn<TransactionItem, String> colQty;
     @FXML private TableColumn<TransactionItem, String> colSubtotal;
+    @FXML private TableColumn<TransactionItem, Void> colCartAction;
 
+    // Panel Pembayaran
     @FXML private Label lblGrandTotal;
     @FXML private RadioButton rbCash;
     @FXML private RadioButton rbQris;
@@ -40,13 +54,76 @@ public class PosController {
     private final ProductService productService = new ProductService();
     private Transaction currentTransaction;
     private final ObservableList<TransactionItem> cartList = FXCollections.observableArrayList();
+    private final ObservableList<Product> catalogList = FXCollections.observableArrayList();
+    private FilteredList<Product> filteredCatalog;
 
     @FXML
     public void initialize() {
         currentTransaction = posService.createNewTransaction(UserSession.getInstance().getCurrentUser());
+        setupCatalogTable();
         setupCartTable();
         setupPaymentFields();
+        loadCatalog();
         updateDisplay();
+    }
+
+    private void setupCatalogTable() {
+        colCatalogName.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
+        colCatalogPrice.setCellValueFactory(c -> new SimpleStringProperty(CurrencyFormatter.formatRupiah(c.getValue().getSellPrice())));
+        colCatalogStock.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getStock())));
+
+        // Tombol Tambah (+) langsung di baris katalog
+        colCatalogAction.setCellFactory(param -> new TableCell<>() {
+            private final Button btnAdd = new Button("➕");
+
+            {
+                btnAdd.getStyleClass().add("btn-primary");
+                btnAdd.setStyle("-fx-padding: 3 8; -fx-font-size: 11px; -fx-font-weight: bold;");
+                btnAdd.setTooltip(new Tooltip("Tambahkan ke Keranjang"));
+                btnAdd.setOnAction(e -> {
+                    Product prod = getTableView().getItems().get(getIndex());
+                    if (prod != null) {
+                        addProduct(prod, 1);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getIndex() >= getTableView().getItems().size()) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnAdd);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+
+        // Double click baris produk juga langsung menambahkan ke keranjang
+        tblCatalog.setRowFactory(tv -> {
+            TableRow<Product> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    addProduct(row.getItem(), 1);
+                }
+            });
+            return row;
+        });
+
+        // Live filter pencarian katalog
+        filteredCatalog = new FilteredList<>(catalogList, p -> true);
+        txtCatalogSearch.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredCatalog.setPredicate(p -> {
+                if (newVal == null || newVal.trim().isEmpty()) return true;
+                String lower = newVal.toLowerCase().trim();
+                return p.getName().toLowerCase().contains(lower)
+                    || p.getBarcode().toLowerCase().contains(lower)
+                    || (p.getCategory() != null && p.getCategory().getName().toLowerCase().contains(lower));
+            });
+        });
+
+        tblCatalog.setItems(filteredCatalog);
     }
 
     private void setupCartTable() {
@@ -56,11 +133,80 @@ public class PosController {
         colQty.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getQuantity())));
         colSubtotal.setCellValueFactory(c -> new SimpleStringProperty(CurrencyFormatter.formatRupiah(c.getValue().getLineTotal())));
 
+        // Tombol inline (+) dan (-) di kolom aksi keranjang
+        colCartAction.setCellFactory(param -> new TableCell<>() {
+            private final Button btnPlus = new Button("+");
+            private final Button btnMinus = new Button("-");
+            private final HBox actionBox = new HBox(4, btnMinus, btnPlus);
+
+            {
+                actionBox.setAlignment(Pos.CENTER);
+                btnPlus.getStyleClass().add("btn-secondary");
+                btnPlus.setStyle("-fx-padding: 2 6; -fx-font-size: 11px; -fx-font-weight: bold;");
+                btnPlus.setTooltip(new Tooltip("Tambah 1"));
+
+                btnMinus.getStyleClass().add("btn-secondary");
+                btnMinus.setStyle("-fx-padding: 2 6; -fx-font-size: 11px; -fx-font-weight: bold;");
+                btnMinus.setTooltip(new Tooltip("Kurang 1"));
+
+                btnPlus.setOnAction(e -> {
+                    TransactionItem item = getTableView().getItems().get(getIndex());
+                    if (item != null) {
+                        addProduct(item.getProduct(), 1);
+                    }
+                });
+
+                btnMinus.setOnAction(e -> {
+                    TransactionItem item = getTableView().getItems().get(getIndex());
+                    if (item != null) {
+                        decreaseItem(item);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getIndex() >= getTableView().getItems().size()) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(actionBox);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+
         tblCart.setItems(cartList);
     }
 
     private void setupPaymentFields() {
         txtAmountPaid.textProperty().addListener((obs, oldVal, newVal) -> calculateChange());
+    }
+
+    private void loadCatalog() {
+        catalogList.setAll(productService.getAllProducts());
+    }
+
+    private void addProduct(Product product, int qty) {
+        if (product == null) return;
+        try {
+            posService.addProductToCart(currentTransaction, product, qty);
+            refreshCart();
+            lblMessage.setText("");
+        } catch (Exception e) {
+            lblMessage.setText(e.getMessage());
+        }
+    }
+
+    private void decreaseItem(TransactionItem item) {
+        if (item == null) return;
+        int current = item.getQuantity();
+        if (current > 1) {
+            currentTransaction.updateQuantity(item.getProduct(), current - 1);
+        } else {
+            currentTransaction.removeItem(item.getProduct());
+        }
+        refreshCart();
     }
 
     @FXML
@@ -77,14 +223,8 @@ public class PosController {
         }
 
         if (product != null) {
-            try {
-                posService.addProductToCart(currentTransaction, product, 1);
-                refreshCart();
-                txtSearch.clear();
-                lblMessage.setText("");
-            } catch (Exception e) {
-                lblMessage.setText(e.getMessage());
-            }
+            addProduct(product, 1);
+            txtSearch.clear();
         } else {
             lblMessage.setText("Produk '" + keyword + "' tidak ditemukan.");
         }
@@ -94,12 +234,7 @@ public class PosController {
     public void handleIncreaseQty() {
         TransactionItem selected = tblCart.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            try {
-                posService.addProductToCart(currentTransaction, selected.getProduct(), 1);
-                refreshCart();
-            } catch (Exception e) {
-                lblMessage.setText(e.getMessage());
-            }
+            addProduct(selected.getProduct(), 1);
         }
     }
 
@@ -107,13 +242,7 @@ public class PosController {
     public void handleDecreaseQty() {
         TransactionItem selected = tblCart.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            int current = selected.getQuantity();
-            if (current > 1) {
-                currentTransaction.updateQuantity(selected.getProduct(), current - 1);
-            } else {
-                currentTransaction.removeItem(selected.getProduct());
-            }
-            refreshCart();
+            decreaseItem(selected);
         }
     }
 
@@ -130,6 +259,7 @@ public class PosController {
     public void handleClearCart() {
         currentTransaction = posService.createNewTransaction(UserSession.getInstance().getCurrentUser());
         refreshCart();
+        lblMessage.setText("");
     }
 
     @FXML
@@ -180,9 +310,10 @@ public class PosController {
             boolean success = posService.processCheckout(currentTransaction, payment);
             if (success) {
                 showReceiptModal(currentTransaction);
-                // Reset keranjang baru
+                // Reset keranjang & reload stok katalog
                 currentTransaction = posService.createNewTransaction(UserSession.getInstance().getCurrentUser());
                 refreshCart();
+                loadCatalog();
                 txtAmountPaid.clear();
                 lblChange.setText("Rp 0");
                 lblMessage.setText("Transaksi berhasil disimpan!");
@@ -219,4 +350,3 @@ public class PosController {
         calculateChange();
     }
 }
-
