@@ -10,13 +10,12 @@
     <packaging>jar</packaging>
 
     <name>POS_app</name>
-    <description>Desktop Point of Sale (POS) Application built with Java, JavaFX, and MySQL JDBC</description>
+    <description>Desktop Point of Sale (POS) and Inventory Management Application built with Java, JavaFX, and Java I/O (CSV Storage)</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <javafx.version>21.0.2</javafx.version>
-        <mysql.connector.version>8.3.0</mysql.connector.version>
         <jbcrypt.version>0.4</jbcrypt.version>
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <main.class>com.posapp.app.MainApp</main.class>
@@ -38,13 +37,6 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>${javafx.version}</version>
-        </dependency>
-
-        <!-- MySQL Connector/J -->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>${mysql.connector.version}</version>
         </dependency>
 
         <!-- Password Hashing Security (BCrypt) -->
@@ -94,7 +86,6 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn javafx:run -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>${main.class}</mainClass>
@@ -109,29 +100,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
             </plugin>
-
-            <!-- Maven Shade Plugin for Fat Executable JAR (Optional Deployment) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.2</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>${main.class}</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
-

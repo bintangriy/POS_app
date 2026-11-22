@@ -1,28 +1,17 @@
 # ==============================================================================
-# POS_app - Database & Application Configuration Template
+# POS_app - File-based Application Configuration Template (Java I/O)
 # ==============================================================================
-# Petunjuk:
-# 1. Salin file ini dan simpan dengan nama: config/app.properties
-# 2. Sesuaikan kredensial koneksi database MySQL di bawah ini sesuai lingkungan Anda.
-# 3. PERINGATAN: File 'config/app.properties' TIDAK BOLEH di-commit ke Git remote
-#    karena berisi informasi rahasia kredensial database.
+# Salin file ini menjadi 'config/app.properties' dan sesuaikan pengaturan direktori jika diperlukan.
 # ==============================================================================
 
-# Database Connection Settings
-db.host=localhost
-db.port=3306
-db.name=pos_app_db
-db.user=root
-db.password=password_mysql_anda
+# Directory path where CSV data files are stored
+app.data.dir=data
 
-# JDBC Driver & Connection Properties
-db.useSSL=false
-db.serverTimezone=Asia/Jakarta
-db.allowPublicKeyRetrieval=true
-db.autoReconnect=true
-
-# Application Environment (development / production)
-app.env=development
+# Application info
 app.name=POS_app
 app.version=1.0.0
+app.env=development
 
+# Currency & locale
+app.currency.symbol=Rp
+app.timezone=Asia/Jakarta
