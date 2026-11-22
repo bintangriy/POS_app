@@ -1,4 +1,3 @@
 id,username,password_hash,full_name,role,terminal_id,is_active
-1,admin,$2a$10$wE6g7yOQ0hY7XqfP3i2k.ePjK4uHjOa9I7S2xZ6x.Jz7pP9B1aLWe,Administrator Toko,ADMIN,,true
-2,kasir1,$2a$10$7vN3K8jU8dF2yW5mP9lZ4eA3bC1dE5fG7hI9jK1lM3nO5pQ7rS9tU,Siti Rahmawati (Kasir),CASHIER,POS-TERM-01,true
-
+1,admin,$2a$10$M1.84rZzHeKGjuCloFiT8e2ZIhu/0gIhzAfyDaVKlxVweI5zLcq4W,Administrator Toko,ADMIN,,true
+2,kasir1,$2a$10$9hoLr8xNU/NcKnaW2sHm3.lkkA7NFLl8N9t6YJ.KB5dK3Fexc3WIm,Siti Rahmawati (Kasir),CASHIER,POS-TERM-01,true
