@@ -1,6 +1,9 @@
 id,name,description
-1,Makanan & Minuman Ringan,Snack dan minuman dalam kemasan
-2,Sembako & Kebutuhan Pokok,Kebutuhan pangan pokok keluarga
-3,Perawatan Tubuh & Kebersihan,Sabun mandi sampo dan deterjen
-4,Bumbu & Bahan Dapur,Garam kecap saus dan penyedap
-
+1,Makanan Ringan & Biskuit,"Snack, wafer, keripik, dan biskuit kemasan"
+2,Minuman & Susu,"Air mineral, teh kemasan, kopi, dan susu cair/bubuk"
+3,Sembako & Beras,"Beras, telur, tepung, gula, dan kebutuhan pangan pokok"
+4,Bumbu Dapur & Minyak,"Minyak goreng, kecap, saus sambal, garam, dan penyedap rasa"
+5,Perawatan Tubuh & Rambut,"Sabun mandi, sampo, pasta gigi, dan sikat gigi"
+6,Kebersihan Rumah Tangga,"Deterjen pakaian, pembersih lantai, dan sabun cuci piring"
+7,Kebutuhan Bayi & Anak,"Minyak telon, popok bayi, dan bubur bayi instan"
+8,Obat-obatan & P3K,"Obat flu, plester luka, minyak kayu putih, dan vitamin"

@@ -1,9 +1,41 @@
 id,product_id,user_id,movement_type,quantity,stock_before,stock_after,remarks,created_at
-1,1,1,STOCK_IN,120,0,120,Saldo awal sistem,2026-11-22T08:00:00
-2,2,1,STOCK_IN,48,0,48,Saldo awal sistem,2026-11-22T08:00:00
-3,3,1,STOCK_IN,35,0,35,Saldo awal sistem,2026-11-22T08:00:00
-4,4,1,STOCK_IN,25,0,25,Saldo awal sistem,2026-11-22T08:00:00
-5,5,1,STOCK_IN,15,0,15,Saldo awal sistem,2026-11-22T08:00:00
-6,6,1,STOCK_IN,4,0,4,Saldo awal sistem (kritis),2026-11-22T08:00:00
-7,7,1,STOCK_IN,30,0,30,Saldo awal sistem,2026-11-22T08:00:00
-
+1,1,1,STOCK_IN,180,0,180,Saldo awal inventaris toko,2026-11-18T08:00:00
+2,2,1,STOCK_IN,150,0,150,Saldo awal inventaris toko,2026-11-18T08:00:00
+3,3,1,STOCK_IN,125,0,125,Saldo awal inventaris toko,2026-11-18T08:00:00
+4,4,1,STOCK_IN,65,0,65,Saldo awal inventaris toko,2026-11-18T08:00:00
+5,5,1,STOCK_IN,70,0,70,Saldo awal inventaris toko,2026-11-18T08:00:00
+6,6,1,STOCK_IN,115,0,115,Saldo awal inventaris toko,2026-11-18T08:00:00
+7,7,1,STOCK_IN,35,0,35,Saldo awal inventaris toko,2026-11-18T08:00:00
+8,8,1,STOCK_IN,58,0,58,Saldo awal inventaris toko,2026-11-18T08:00:00
+9,9,1,STOCK_IN,210,0,210,Saldo awal inventaris toko,2026-11-18T08:00:00
+10,10,1,STOCK_IN,90,0,90,Saldo awal inventaris toko,2026-11-18T08:00:00
+11,11,1,STOCK_IN,105,0,105,Saldo awal inventaris toko,2026-11-18T08:00:00
+12,12,1,STOCK_IN,34,0,34,Saldo awal inventaris toko,2026-11-18T08:00:00
+13,13,1,STOCK_IN,60,0,60,Saldo awal inventaris toko,2026-11-18T08:00:00
+14,14,1,STOCK_IN,75,0,75,Saldo awal inventaris toko,2026-11-18T08:00:00
+15,15,1,STOCK_IN,72,0,72,Saldo awal inventaris toko,2026-11-18T08:00:00
+16,16,1,STOCK_IN,52,0,52,Saldo awal inventaris toko,2026-11-18T08:00:00
+17,17,1,STOCK_IN,44,0,44,Saldo awal inventaris toko,2026-11-18T08:00:00
+18,18,1,STOCK_IN,80,0,80,Saldo awal inventaris toko,2026-11-18T08:00:00
+19,19,1,STOCK_IN,33,0,33,Saldo awal inventaris toko,2026-11-18T08:00:00
+20,20,1,STOCK_IN,60,0,60,Saldo awal inventaris toko,2026-11-18T08:00:00
+21,21,1,STOCK_IN,70,0,70,Saldo awal inventaris toko,2026-11-18T08:00:00
+22,22,1,STOCK_IN,55,0,55,Saldo awal inventaris toko,2026-11-18T08:00:00
+23,23,1,STOCK_IN,68,0,68,Saldo awal inventaris toko,2026-11-18T08:00:00
+24,24,1,STOCK_IN,48,0,48,Saldo awal inventaris toko,2026-11-18T08:00:00
+25,25,1,STOCK_IN,32,0,32,Saldo awal inventaris toko,2026-11-18T08:00:00
+26,26,1,STOCK_IN,90,0,90,Saldo awal inventaris toko,2026-11-18T08:00:00
+27,27,1,STOCK_IN,85,0,85,Saldo awal inventaris toko,2026-11-18T08:00:00
+28,28,1,STOCK_IN,62,0,62,Saldo awal inventaris toko,2026-11-18T08:00:00
+29,29,1,STOCK_IN,48,0,48,Saldo awal inventaris toko,2026-11-18T08:00:00
+30,30,1,STOCK_IN,75,0,75,Saldo awal inventaris toko,2026-11-18T08:00:00
+31,31,1,STOCK_IN,58,0,58,Saldo awal inventaris toko,2026-11-18T08:00:00
+32,32,1,STOCK_IN,45,0,45,Saldo awal inventaris toko,2026-11-18T08:00:00
+33,33,1,STOCK_IN,42,0,42,Saldo awal inventaris toko,2026-11-18T08:00:00
+34,34,1,STOCK_IN,65,0,65,Saldo awal inventaris toko,2026-11-18T08:00:00
+35,35,1,STOCK_IN,50,0,50,Saldo awal inventaris toko,2026-11-18T08:00:00
+36,1,1,STOCK_IN,50,100,150,Penerimaan barang dari supplier distributor resmi,2026-11-20T10:00:00
+37,9,1,STOCK_IN,50,100,150,Penerimaan barang dari supplier distributor resmi,2026-11-20T10:00:00
+38,16,1,STOCK_IN,50,100,150,Penerimaan barang dari supplier distributor resmi,2026-11-20T10:00:00
+39,21,1,STOCK_IN,50,100,150,Penerimaan barang dari supplier distributor resmi,2026-11-20T10:00:00
+40,12,1,ADJUSTMENT,-2,6,4,Penyesuaian stok: 2 kemasan bocor saat display,2026-11-21T16:00:00
