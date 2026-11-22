@@ -1,60 +1,39 @@
 # Test Cases Specification - POS_app
 
-Dokumen ini mendefinisikan rincian skenario pengujian unit (*test cases*) untuk modul domain, logika bisnis, transaksi atomik, dan pembacaan konfigurasi Java I/O.
+Dokumen ini mendefinisikan skenario uji unit (*test cases*) untuk aplikasi **POS_app** berbasis Java I/O dan penyimpanan CSV.
 
 ---
 
-## 1. Test Cases: Java I/O Configuration (`AppConfigTest`)
+## 1. Test Cases: Java I/O & CSV Engine
 
-| Test ID | Skenario Uji | Input / Kondisi | Hasil yang Diharapkan |
+| Test ID | Skenario Uji | Kondisi / Input | Hasil yang Diharapkan |
 | :--- | :--- | :--- | :--- |
-| **TC-IO-01** | Membaca konfigurasi valid menggunakan `FileInputStream` | File `config/app.properties` berisi `db.host=localhost`, `db.name=pos_app_db` | Properti terbaca sempurna, `AppConfig.get("db.host")` mengembalikan `"localhost"`. |
-| **TC-IO-02** | Penanganan file konfigurasi tidak ditemukan | File `config/app.properties` tidak ada di filesystem | Melempar `RuntimeException` informatif dengan petunjuk menyalin dari `app.properties.example`. |
-| **TC-IO-03** | Penanganan properti wajib yang hilang | `db.host` dihilangkan dari file properti | Melempar `IllegalStateException` ("Konfigurasi wajib hilang: db.host"). |
+| **TC-CSV-01** | Parsing baris standar | `"1,8991,Indomie,3000"` | Menghasilkan list 4 elemen tepat. |
+| **TC-CSV-02** | Parsing nilai dengan koma dalam tanda kutip | `"1,\"Beras, Ramos\",50000"` | Elemen kedua: `"Beras, Ramos"` tanpa terpotong. |
+| **TC-CSV-03** | Parsing nilai dengan tanda kutip ganda | `"1,\"Sabun \"\"Lifebuoy\"\"\",4500"` | Elemen kedua: `"Sabun \"Lifebuoy\""`. |
+| **TC-IO-01** | Membaca konfigurasi `AppConfig` via `FileInputStream` | File properties valid | Mengembalikan nilai properti tepat. |
+| **TC-IO-02** | File konfigurasi tidak ditemukan | Path file fiktif | Melempar `RuntimeException` informatif. |
 
 ---
 
 ## 2. Test Cases: Domain Model & Aturan Bisnis
 
-### 2.1 Model Produk (`ProductTest`)
-| Test ID | Skenario Uji | Input / Kondisi | Hasil yang Diharapkan |
+| Test ID | Skenario Uji | Kondisi / Input | Hasil yang Diharapkan |
 | :--- | :--- | :--- | :--- |
-| **TC-PROD-01** | Pembuatan produk valid | Beli = 10000, Jual = 15000, Stok = 20 | Objek `Product` berhasil dibuat. |
-| **TC-PROD-02** | Validasi harga jual < harga beli | Beli = 20000, Jual = 15000 | Melempar `IllegalArgumentException`. |
-| **TC-PROD-03** | Pengurangan stok normal | Stok awal = 10, reduceStock(3) | Sisa stok = 7. |
-| **TC-PROD-04** | Pengurangan stok melebihi saldo fisik | Stok awal = 5, reduceStock(8) | Melempar `IllegalStateException` (stok tidak mencukupi, mencegah stok negatif). |
-| **TC-PROD-05** | Deteksi peringatan stok kritis | Stok = 4, minStockAlert = 5 | Method `isLowStock()` mengembalikan `true`. |
-
-### 2.2 Transaksi & Komposisi Keranjang (`TransactionTest`)
-| Test ID | Skenario Uji | Input / Kondisi | Hasil yang Diharapkan |
-| :--- | :--- | :--- | :--- |
-| **TC-TRANS-01** | Tambah item baru ke keranjang | Produk A (Rp 5.000) Qty 2 | Keranjang berisi 1 item, Grand Total = Rp 10.000. |
-| **TC-TRANS-02** | Tambah produk yang sama berulang kali | Scan Produk A Qty 2, lalu Produk A Qty 3 | Keranjang tetap 1 baris item dengan total Qty = 5, Grand Total = Rp 25.000 (tidak ada duplikasi baris). |
-| **TC-TRANS-03** | Hapus item dari keranjang | Hapus Produk A dari keranjang | Keranjang kosong, Grand Total = Rp 0. |
-
-### 2.3 Pembayaran Polimorfik (`PaymentTest`)
-| Test ID | Skenario Uji | Input / Kondisi | Hasil yang Diharapkan |
-| :--- | :--- | :--- | :--- |
-| **TC-PAY-01** | Pembayaran Tunai uang cukup | Grand Total = Rp 75.000, Bayar = Rp 100.000 | `processPayment()` sukses, `getChange()` = Rp 25.000. |
-| **TC-PAY-02** | Pembayaran Tunai uang kurang | Grand Total = Rp 50.000, Bayar = Rp 40.000 | Melempar `IllegalArgumentException` ("Uang tunai kurang"). |
-| **TC-PAY-03** | Pembayaran QRIS nominal pas | Grand Total = Rp 60.000, Bayar = Rp 60.000, Ref = "QRIS123" | `processPayment()` sukses, status settled = true. |
-| **TC-PAY-04** | Pembayaran QRIS nominal tidak sesuai | Grand Total = Rp 60.000, Bayar = Rp 70.000 | Melempar `IllegalArgumentException` (QRIS harus bernilai presisi). |
+| **TC-MOD-01** | Invarian harga produk | Harga jual < Harga beli | Melempar `IllegalArgumentException`. |
+| **TC-MOD-02** | Mencegah stok negatif | Mengurangi stok melebihi saldo | Melempar `IllegalStateException`, stok tidak berubah. |
+| **TC-MOD-03** | Pembayaran Tunai uang pas / lebih | Bayar >= grand total | Sukses, menghitung kembalian tepat. |
+| **TC-MOD-04** | Pembayaran Tunai uang kurang | Bayar < grand total | Melempar `IllegalArgumentException`. |
+| **TC-MOD-05** | Pembayaran QRIS presisi | Bayar == grand total | Status settled = true. |
 
 ---
 
-## 3. Test Cases: Layanan Bisnis & Keamanan
+## 3. Test Cases: Layanan Bisnis & Multi-File Consistency
 
-### 3.1 Layanan Autentikasi (`AuthServiceTest`)
-| Test ID | Skenario Uji | Input / Kondisi | Hasil yang Diharapkan |
+| Test ID | Skenario Uji | Kondisi / Input | Hasil yang Diharapkan |
 | :--- | :--- | :--- | :--- |
-| **TC-AUTH-01** | Login dengan password valid | Username "admin", Password "admin123" | Mengembalikan objek `Admin` aktif, sesi terbentuk. |
-| **TC-AUTH-02** | Login dengan password salah | Username "admin", Password "wrongpass" | Mengembalikan `null` atau melempar `AuthenticationException`. |
-| **TC-AUTH-03** | Pembatasan menu berdasarkan peran | User = `Cashier`, panggil `canAccessAdminMenu()` | Mengembalikan `false`. |
-
-### 3.2 Pembatalan Transaksi oleh Admin (`TransactionServiceTest`)
-| Test ID | Skenario Uji | Input / Kondisi | Hasil yang Diharapkan |
-| :--- | :--- | :--- | :--- |
-| **TC-CANC-01** | Admin membatalkan transaksi | User = `Admin`, Transaksi status = `COMPLETED` | Transaksi berubah jadi `CANCELLED`, stok barang direstorasi, tercatat di `stock_movements`. |
-| **TC-CANC-02** | Kasir mencoba membatalkan transaksi | User = `Cashier`, Transaksi status = `COMPLETED` | Ditolak dengan `AccessDeniedException` (hanya Admin yang berwenang). |
-| **TC-CANC-03** | Membatalkan transaksi yang sudah pernah dibatalkan | Transaksi status = `CANCELLED` | Ditolak dengan `IllegalStateException`. |
-
+| **TC-SVC-01** | Checkout kasir sukses | Beli 5 unit dari stok 20 | Nota tersimpan di CSV, sisa stok menjadi 15, tercatat log mutasi `SALE`. |
+| **TC-SVC-02** | Checkout gagal karena stok kurang | Minta beli melebihi stok | Ditolak sebelum berkas CSV tersentuh. |
+| **TC-SVC-03** | Pembatalan transaksi oleh Admin | Transaksi status `COMPLETED` | Status menjadi `CANCELLED`, seluruh stok item belanja direstorasi, tercatat log `CANCELLATION_RETURN`. |
+| **TC-SVC-04** | Kasir mencoba membatalkan transaksi | Kasir role | Ditolak dengan `IllegalArgumentException`. |
+| **TC-SVC-05** | Laporan penjualan harian & laba kotor | Transaksi pada hari aktif | Total omset dan laba kotor (omset - snapshot HPP) terhitung akurat. |
