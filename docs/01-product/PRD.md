@@ -37,17 +37,19 @@ Aplikasi ini dikembangkan sebagai tugas akhir mata kuliah **Java Object-Oriented
 
 ### FR-03: Product & Category Management
 - CRUD master produk: Barcode unik, Nama Produk, Kategori, Harga Beli (HPP), Harga Jual, Stok Saat Ini, Batas Minimum Stok Alert.
+- **Auto Generate Barcode:** Tombol cepat `[ ➕ Auto Barcode ]` untuk membuat kode barcode unik standar retail (awalan `899...`) secara otomatis jika produk UMKM tidak memiliki barcode pabrik.
 - CRUD master kategori barang.
 - Disimpan pada berkas `data/products.csv` dan `data/categories.csv`.
 - Validasi bisnis: Harga jual $\ge$ harga beli, harga dan stok awal $\ge 0$.
 - Pencarian cepat produk berdasarkan barcode atau teks nama produk.
 
 ### FR-04: Point of Sale (Kasir)
-- Pencarian produk via barcode scanner USB atau ketik nama pada form pencarian.
+- **Katalog Produk Cepat:** Panel visual daftar produk dengan filter pencarian instan (nama/kategori) dan tombol **`[ ➕ ]`** per baris produk serta dukungan *double-click* untuk memasukkan produk ke keranjang belanja tanpa memerlukan pemindai barcode fisik.
+- **Pencarian / Scan Barcode:** Tetap mendukung input barcode scanner USB atau ketik nama pada form pencarian.
 - Keranjang belanja interaktif:
+  - Tombol aksi inline **`[ + ]`** dan **`[ - ]`** langsung pada setiap baris item keranjang untuk penyesuaian jumlah seketika.
   - Penambahan kuantitas produk otomatis jika barcode di-scan ulang.
-  - Pengubahan jumlah item secara langsung atau melalui tombol `+` / `-`.
-  - Penghapusan item dari keranjang.
+  - Penghapusan item dari keranjang dan tombol batal transaksi.
 - Validasi stok realtime: Mencegah penambahan kuantitas belanja melebihi sisa stok fisik di database CSV.
 - Perhitungan otomatis subtotal belanja, diskon per item/faktur, dan grand total.
 - Dukungan metode pembayaran ganda:

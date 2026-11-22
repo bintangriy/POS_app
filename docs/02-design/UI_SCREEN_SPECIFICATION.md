@@ -53,33 +53,35 @@ Dokumen ini mendefinisikan rincian spesifikasi layar, komponen visual, interaksi
     6. Tombol Cepat: `Restock Sekarang` (Mengarahkan ke menu inventaris).
 
 ### 2.3 Layar Transaksi Kasir (`views/pos.fxml`)
-- **Tujuan:** Operasional transaksi kasir belanja harian dengan alur cepat.
-- **Komponen Visual:**
-  - `TextField txtBarcode`: Input barcode/pencarian barang dengan shortcut keyboard `F1`.
-  - `TableView tblCart`: Tabel belanjaan dengan kolom:
-    1. No
-    2. Barcode
-    3. Nama Barang
-    4. Harga Satuan
-    5. Qty (Dilengkapi tombol inline `+` dan `-`)
-    6. Subtotal
-    7. Aksi (Tombol Hapus)
-  - `Label lblGrandTotal`: Tampilan total tagihan berukuran besar (32px Bold, warna kontras).
-  - `RadioButton rbCash` & `RadioButton rbQris`: Pilihan metode pembayaran.
-  - `TextField txtCashGiven`: Input uang tunai yang diserahkan pelanggan.
-  - `FlowPane pnlQuickCash`: Tombol pecahan uang cepat (`Uang Pas`, `10k`, `20k`, `50k`, `100k`).
-  - `Label lblChange`: Menampilkan jumlah uang kembalian secara realtime.
-  - `Button btnProcessCheckout`: Tombol konfirmasi bayar (`Enter` atau `F5`).
-  - `Button btnCancelCart`: Tombol batalkan seluruh keranjang (`Esc`).
+- **Tujuan:** Operasional transaksi kasir belanja harian dengan alur cepat, fleksibel untuk kasir dengan maupun tanpa pemindai barcode.
+- **Komponen Visual (Layout 3 Kolom):**
+  1. **Kolom Kiri: Panel Katalog Produk Cepat (`tblCatalog`):**
+     - `TextField txtCatalogSearch`: Filter pencarian instan berdasarkan nama produk, barcode, atau kategori.
+     - `TableView tblCatalog`: Tabel seluruh produk toko (Nama, Harga, Sisa Stok).
+     - Tombol inline per baris: **`[ ➕ ]`** (Klik tombol `➕` atau klik ganda baris produk untuk langsung memasukkan barang ke keranjang belanja tanpa perlu memindai barcode).
+  2. **Kolom Tengah: Keranjang Belanja (`tblCart`):**
+     - `TextField txtSearch`: Input scanner barcode atau ketik manual (shortcut `F1`) + Tombol `Tambah`.
+     - `TableView tblCart`: Tabel item belanjaan (Barcode, Nama Barang, Harga Satuan, Qty, Subtotal).
+     - Kolom Aksi Keranjang: Tombol inline **`[ - ]`** dan **`[ + ]`** untuk menambah atau mengurangi kuantitas secara langsung per baris.
+     - Tombol Aksi Bawah: `➕ (+1)`, `➖ (-1)`, `🗑 Hapus Item`, dan `Batal Transaksi`.
+  3. **Kolom Kanan: Panel Pembayaran & Checkout:**
+     - `Label lblGrandTotal`: Tampilan total tagihan berukuran besar.
+     - `RadioButton rbCash` & `RadioButton rbQris`: Pilihan metode pembayaran.
+     - `TextField txtAmountPaid`: Input uang tunai yang diserahkan pelanggan.
+     - `FlowPane pnlQuickCash`: Tombol pecahan uang cepat (`Uang Pas`, `10k`, `20k`, `50k`, `100k`).
+     - `Label lblChange`: Menampilkan jumlah uang kembalian secara realtime.
+     - `Button btnProcessCheckout`: Tombol konfirmasi bayar & cetak nota.
 
-### 2.4 Layar Manajemen Produk (`views/products.fxml`)
+### 2.4 Layar Manajemen Produk & Modal Dialog (`views/products.fxml` & `views/product_dialog.fxml`)
 - **Tujuan:** Pengelolaan master katalog produk dan kategori barang.
 - **Komponen Visual:**
   - `TextField txtSearchProduct`: Filter pencarian berdasarkan barcode atau nama produk.
   - `ComboBox cmbCategoryFilter`: Filter berdasarkan kategori barang.
   - `Button btnAddProduct`: Membuka modal tambah produk baru.
   - `TableView tblProducts`: Daftar produk dengan penyorotan warna khusus jika stok $\le$ batas minimum.
-  - Tombol aksi per baris: `Edit` dan `Hapus` (dengan konfirmasi pencegahan foreign key constraint).
+  - **Modal Dialog Produk (`product_dialog.fxml`):**
+    - Input Barcode dilengkapi tombol **`[ ➕ Auto Barcode ]`** untuk men-generate kode barcode acak unik standar retail (`899...`) secara otomatis jika produk UMKM tidak memiliki barcode kemasan pabrik.
+    - Input Nama Produk, Kategori, Harga Beli, Harga Jual, Stok Awal, dan Batas Minimum Stok Alert.
 
 ### 2.5 Layar Manajemen Stok (`views/inventory.fxml`)
 - **Tujuan:** Operasional persediaan, pencatatan barang masuk, dan audit mutasi.

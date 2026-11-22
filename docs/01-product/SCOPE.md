@@ -19,10 +19,12 @@ Dokumen ini mendefinisikan batasan ruang lingkup proyek (*in-scope*) dan hal-hal
    - Indikator produk dengan stok menipis (*low stock alert*).
 3. **Manajemen Produk & Kategori:**
    - CRUD master produk dan kategori disimpan pada `data/products.csv` dan `data/categories.csv`.
+   - Fitur **Auto Barcode Generator** (`[ ➕ Auto Barcode ]`) untuk menghasilkan barcode numerik unik otomatis bagi produk UMKM tanpa kemasan pabrik.
    - Validasi bisnis: harga jual $\ge$ harga beli, harga $\ge 0$, stok $\ge 0$.
 4. **Point of Sale (Kasir):**
-   - Scanning barcode produk atau pencarian manual.
-   - Keranjang belanja dinamis (tambah, edit kuantitas, hapus item).
+   - **Katalog Produk Cepat:** Panel visual daftar produk dengan tombol `[ ➕ ]` per baris dan double-click untuk memasukkan produk ke keranjang tanpa perlu scanner barcode.
+   - Scanning barcode produk atau pencarian manual teks.
+   - Keranjang belanja dinamis dengan tombol inline `[ + ]` dan `[ - ]` per baris item untuk penyesuaian kuantitas cepat.
    - Validasi ketersediaan stok fisik secara realtime.
    - Pembayaran Tunai (validasi nominal dan hitung uang kembalian otomatis).
    - Pembayaran QRIS / Digital (pencatatan nomor referensi pembayaran).

@@ -37,6 +37,7 @@ Dokumen ini mendefinisikan *user stories* berdasarkan kebutuhan pengguna akhir (
   - *I want to* mendaftarkan produk baru ke berkas `data/products.csv`,
   - *So that* barang dapat mulai dijual oleh kasir.
   - **Acceptance Criteria:** Barcode tidak boleh duplikat, harga jual $\ge$ harga beli, stok awal $\ge 0$.
+  - **Auto Barcode:** Disediakan tombol `[ ➕ Auto Barcode ]` untuk membuat barcode numerik unik baru otomatis jika produk tidak berkemasan barcode pabrik.
 
 - **US-PROD-02 (Manajemen Kategori):**
   - *As an* Admin,
@@ -47,17 +48,27 @@ Dokumen ini mendefinisikan *user stories* berdasarkan kebutuhan pengguna akhir (
 
 ## 4. Modul Point of Sale (Kasir)
 
-- **US-POS-01 (Pencarian Produk & Scan Barcode):**
+- **US-POS-01 (Katalog Visual & Penambahan Cepat via Tanda Plus):**
   - *As a* Kasir,
-  - *I want to* memindai barcode atau mencari nama produk,
+  - *I want to* memilih produk dari panel katalog visual dan menekan tombol `[ ➕ ]` (atau double click baris produk),
+  - *So that* barang langsung masuk ke keranjang belanja tanpa perlu memindai barcode fisik.
+
+- **US-POS-02 (Pencarian Produk & Scan Barcode):**
+  - *As a* Kasir,
+  - *I want to* memindai barcode atau mencari nama produk lewat kolom scan,
   - *So that* barang masuk ke keranjang belanja dengan validasi ketersediaan stok fisik.
 
-- **US-POS-02 (Pembayaran Tunai & QRIS):**
+- **US-POS-03 (Penyesuaian Kuantitas Inline di Keranjang):**
+  - *As a* Kasir,
+  - *I want to* menambah atau mengurangi jumlah barang di keranjang belanja dengan tombol `[ + ]` dan `[ - ]` per baris,
+  - *So that* penyesuaian belanjaan pelanggan dapat dilakukan dalam satu klik cepat.
+
+- **US-POS-04 (Pembayaran Tunai & QRIS):**
   - *As a* Kasir,
   - *I want to* memproses pembayaran tunai dengan kalkulasi kembalian otomatis atau mencatat pembayaran QRIS,
   - *So that* transaksi selesai dan pelanggan menerima struk belanja.
 
-- **US-POS-03 (Penyimpanan Transaksi Konsisten):**
+- **US-POS-05 (Penyimpanan Transaksi Konsisten):**
   - *As a* Kasir,
   - *I want to* nota tersimpan ke `data/transactions.csv` dan `data/transaction_details.csv`, serta stok di `data/products.csv` otomatis terpotong,
   - *So that* data penjualan dan persediaan selalu akurat.

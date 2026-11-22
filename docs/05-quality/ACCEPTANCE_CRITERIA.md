@@ -9,8 +9,8 @@ Kriteria penerimaan formal untuk aplikasi desktop **POS_app** berbasis **Java I/
 - [x] Seluruh 7 modul utama berfungsi penuh:
   - Authentication (Login/Logout dengan hash BCrypt, RBAC Admin vs Kasir).
   - Dashboard (Omset hari ini, jumlah transaksi, total produk, peringatan stok menipis).
-  - Product & Category Management (CRUD produk dan kategori via CSV).
-  - Point of Sale (Scan barcode, keranjang dinamis, kalkulasi kembalian, cetak struk).
+  - Product & Category Management (CRUD produk dan kategori via CSV, tombol `➕ Auto Barcode` untuk produk tanpa kemasan pabrik).
+  - Point of Sale (Katalog visual dengan tombol `➕` cepat dan double-click tanpa scanner, scan barcode, keranjang dinamis dengan kontrol inline `+`/`-`, kalkulasi kembalian, cetak struk).
   - Inventory Management (Restock, opname, log mutasi audit).
   - Transaction History (Riwayat penjualan, filter tanggal, pembatalan nota oleh Admin disertai restorasi stok otomatis).
   - Reports (Rekapitulasi penjualan harian, bulanan, produk terlaris, valuasi persediaan).

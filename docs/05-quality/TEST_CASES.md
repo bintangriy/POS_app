@@ -25,6 +25,9 @@ Dokumen ini mendefinisikan skenario uji unit (*test cases*) untuk aplikasi **POS
 | **TC-MOD-03** | Pembayaran Tunai uang pas / lebih | Bayar >= grand total | Sukses, menghitung kembalian tepat. |
 | **TC-MOD-04** | Pembayaran Tunai uang kurang | Bayar < grand total | Melempar `IllegalArgumentException`. |
 | **TC-MOD-05** | Pembayaran QRIS presisi | Bayar == grand total | Status settled = true. |
+| **TC-UI-01** | Penambahan belanja via katalog `+` | Klik tombol `➕` pada baris produk katalog | Produk masuk ke keranjang belanja dengan kuantitas 1 tanpa scan barcode. |
+| **TC-UI-02** | Penyesuaian inline Qty di keranjang | Klik tombol `+` / `-` pada tabel keranjang | Kuantitas bertambah / berkurang, subtotal dan grand total ter-update otomatis. |
+| **TC-UI-03** | Auto-generate barcode produk | Klik tombol `➕ Auto Barcode` pada form produk | Terisi kode barcode unik 13 digit (awalan `899`) yang belum pernah terdaftar. |
 
 ---
 

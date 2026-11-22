@@ -4,6 +4,16 @@ Seluruh perubahan penting pada spesifikasi, arsitektur, dan kode aplikasi **POS_
 
 ---
 
+## [1.1.0-pos-enhancement] - 2026-11-22 - Peningkatan UX Kasir & Auto Barcode
+
+### Ditambahkan (Added)
+- **Katalog Produk Cepat Kasir:** Menambahkan panel tabel katalog produk pada sisi kiri layar kasir (`pos.fxml`) dilengkapi pencarian filter *real-time* dan tombol inline **`[ ➕ ]`** per baris untuk memasukkan produk ke keranjang belanja tanpa perlu memindai barcode.
+- **Dukungan Double-Click:** Memungkinkan kasir menambahkan produk ke keranjang belanja cukup dengan klik ganda (*double-click*) pada baris produk katalog.
+- **Kontrol Kuantitas Inline di Keranjang:** Menambahkan tombol cepat **`[ + ]`** dan **`[ - ]`** langsung di dalam baris item tabel keranjang belanja untuk menambah/mengurangi kuantitas secara instan.
+- **Generator Barcode Otomatis:** Tombol **`[ ➕ Auto Barcode ]`** pada modal master produk (`product_dialog.fxml`) yang secara otomatis menghasilkan 13 digit kode unik standar retail (`899...`) jika produk UMKM tidak memiliki kemasan barcode pabrik.
+
+---
+
 ## [1.0.0-csv] - 2026-11-22 - Refactoring Java I/O (CSV Storage)
 
 ### Diubah (Changed)
