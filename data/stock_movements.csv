@@ -1,0 +1,9 @@
+id,product_id,user_id,movement_type,quantity,stock_before,stock_after,remarks,created_at
+1,1,1,STOCK_IN,120,0,120,Saldo awal sistem,2026-11-22T08:00:00
+2,2,1,STOCK_IN,48,0,48,Saldo awal sistem,2026-11-22T08:00:00
+3,3,1,STOCK_IN,35,0,35,Saldo awal sistem,2026-11-22T08:00:00
+4,4,1,STOCK_IN,25,0,25,Saldo awal sistem,2026-11-22T08:00:00
+5,5,1,STOCK_IN,15,0,15,Saldo awal sistem,2026-11-22T08:00:00
+6,6,1,STOCK_IN,4,0,4,Saldo awal sistem (kritis),2026-11-22T08:00:00
+7,7,1,STOCK_IN,30,0,30,Saldo awal sistem,2026-11-22T08:00:00
+
