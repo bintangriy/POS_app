@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.posapp.controller.ReceiptDialogController"
+      spacing="12" prefWidth="420" prefHeight="550" stylesheets="@../styles/main.css" styleClass="card">
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <Label text="Pratinjau Struk Nota Penjualan" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+
+    <TextArea fx:id="txtReceipt" editable="false" wrapText="true" VBox.vgrow="ALWAYS"
+              style="-fx-font-family: 'Courier New', monospace; -fx-font-size: 12px;"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Tutup Nota" onAction="#handleClose" styleClass="btn-primary"/>
+    </HBox>
+</VBox>
+

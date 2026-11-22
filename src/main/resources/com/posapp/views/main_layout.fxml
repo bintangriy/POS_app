@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.posapp.controller.MainDashboardController"
+            prefWidth="1100" prefHeight="720"
+            stylesheets="@../styles/main.css">
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox spacing="10" prefWidth="230" styleClass="sidebar">
+            <VBox spacing="4">
+                <padding><Insets bottom="20"/></padding>
+                <Label text="POS_app" styleClass="sidebar-title"/>
+                <Label text="Retail &amp; Inventory System" styleClass="sidebar-subtitle"/>
+            </VBox>
+
+            <Button fx:id="btnMenuDashboard" text="📊 Dashboard" onAction="#openDashboard" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button fx:id="btnMenuPos" text="🛒 Kasir (POS)" onAction="#openPos" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button fx:id="btnMenuProducts" text="📦 Produk &amp; Kategori" onAction="#openProducts" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button fx:id="btnMenuInventory" text="📋 Stok &amp; Mutasi" onAction="#openInventory" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button fx:id="btnMenuHistory" text="📜 Riwayat Transaksi" onAction="#openHistory" maxWidth="Infinity" styleClass="nav-button"/>
+            <Button fx:id="btnMenuReports" text="📈 Laporan Keuangan" onAction="#openReports" maxWidth="Infinity" styleClass="nav-button"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <!-- User Info & Logout -->
+            <VBox spacing="6" style="-fx-background-color: #1E293B; -fx-padding: 12; -fx-background-radius: 6;">
+                <Label fx:id="lblUserFullName" text="Nama Staf" style="-fx-text-fill: #FFFFFF; -fx-font-weight: bold;"/>
+                <Label fx:id="lblUserRole" text="ROLE" style="-fx-text-fill: #38BDF8; -fx-font-size: 11px;"/>
+                <Button text="🚪 Logout" onAction="#handleLogout" maxWidth="Infinity" styleClass="btn-danger" style="-fx-font-size: 12px;"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Center Content Area -->
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-background-color: #F8FAFC;">
+            <padding>
+                <Insets top="16" right="20" bottom="16" left="20"/>
+            </padding>
+        </StackPane>
+    </center>
+
+</BorderPane>
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.posapp.controller.DashboardController"
+      spacing="18" stylesheets="@../styles/main.css">
+
+    <Label text="Ringkasan Operasional Toko Hari Ini" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+
+    <!-- Metric Cards Grid -->
+    <GridPane hgap="16" vgap="16">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/>
+        </columnConstraints>
+
+        <!-- Metric 1: Omset Hari Ini -->
+        <VBox spacing="6" styleClass="card" GridPane.columnIndex="0">
+            <Label text="PENJUALAN HARI INI" styleClass="metric-title"/>
+            <Label fx:id="lblTodaySales" text="Rp 0" styleClass="metric-value-highlight"/>
+        </VBox>
+
+        <!-- Metric 2: Total Transaksi -->
+        <VBox spacing="6" styleClass="card" GridPane.columnIndex="1">
+            <Label text="TRANSAKSI HARI INI" styleClass="metric-title"/>
+            <Label fx:id="lblTodayTransactions" text="0 Transaksi" styleClass="metric-value"/>
+        </VBox>
+
+        <!-- Metric 3: Total Produk -->
+        <VBox spacing="6" styleClass="card" GridPane.columnIndex="2">
+            <Label text="TOTAL SKU PRODUK" styleClass="metric-title"/>
+            <Label fx:id="lblTotalProducts" text="0 Produk" styleClass="metric-value"/>
+        </VBox>
+
+        <!-- Metric 4: Low Stock Alert -->
+        <VBox spacing="6" styleClass="card" GridPane.columnIndex="3">
+            <Label text="STOK MENIPIS (KRITIS)" styleClass="metric-title"/>
+            <Label fx:id="lblLowStockCount" text="0 Item" styleClass="metric-value-warning"/>
+        </VBox>
+    </GridPane>
+
+    <!-- Low Stock Alert Table -->
+    <VBox spacing="10" styleClass="card" VBox.vgrow="ALWAYS">
+        <Label text="⚠️ Daftar Produk yang Butuh Pemesanan Ulang (Stok &lt;= Batas Minimum)" style="-fx-font-weight: bold; -fx-text-fill: #D97706;"/>
+        <TableView fx:id="tblLowStock" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colBarcode" text="Barcode" prefWidth="150"/>
+                <TableColumn fx:id="colName" text="Nama Produk" prefWidth="280"/>
+                <TableColumn fx:id="colCategory" text="Kategori" prefWidth="180"/>
+                <TableColumn fx:id="colStock" text="Sisa Stok" prefWidth="100"/>
+                <TableColumn fx:id="colMinStock" text="Batas Min" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</VBox>
+

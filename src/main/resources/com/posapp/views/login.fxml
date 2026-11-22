@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.posapp.controller.LoginController"
+      alignment="CENTER" spacing="16" prefWidth="440" prefHeight="480"
+      stylesheets="@../styles/main.css" style="-fx-background-color: #F8FAFC;">
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox alignment="CENTER" spacing="6">
+        <Label text="POS_app" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+        <Label text="Sistem Kasir &amp; Inventaris UMKM (Java I/O)" style="-fx-text-fill: #64748B; -fx-font-size: 13px;"/>
+    </VBox>
+
+    <VBox spacing="14" styleClass="card" prefWidth="360">
+        <VBox spacing="6">
+            <Label text="Nama Pengguna (Username):" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+            <TextField fx:id="txtUsername" promptText="Masukkan username..."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="Kata Sandi (Password):" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+            <PasswordField fx:id="txtPassword" promptText="Masukkan password..."/>
+        </VBox>
+
+        <Label fx:id="lblError" text="Error message" style="-fx-text-fill: #DC2626; -fx-font-weight: bold;" wrapText="true"/>
+
+        <Button text="Masuk ke Sistem" onAction="#handleLogin" defaultButton="true" maxWidth="Infinity" styleClass="btn-primary" prefHeight="40"/>
+    </VBox>
+
+    <Label text="Default Seed: admin/admin123 atau kasir1/kasir123" style="-fx-text-fill: #94A3B8; -fx-font-size: 11px;"/>
+</VBox>
+

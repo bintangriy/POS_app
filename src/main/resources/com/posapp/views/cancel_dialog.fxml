@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.posapp.controller.CancelDialogController"
+      spacing="14" prefWidth="420" stylesheets="@../styles/main.css" styleClass="card">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Konfirmasi Pembatalan Transaksi" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #DC2626;"/>
+
+    <Label text="PERINGATAN: Tindakan ini hanya dapat dilakukan oleh Administrator. Seluruh stok barang dalam transaksi ini akan secara otomatis dikembalikan ke inventaris toko."
+           wrapText="true" style="-fx-text-fill: #64748B;"/>
+
+    <HBox spacing="8">
+        <Label text="No. Faktur: " style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblInvoice" text="INV-XXXX" style="-fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+    </HBox>
+
+    <VBox spacing="6">
+        <Label text="Alasan Pembatalan (Wajib diisi):" style="-fx-font-weight: bold;"/>
+        <TextArea fx:id="txtReason" promptText="misal: Barang diretur pembeli karena kemasan rusak..." prefRowCount="3" wrapText="true"/>
+    </VBox>
+
+    <Label fx:id="lblError" text="" style="-fx-text-fill: #DC2626; -fx-font-weight: bold;" visible="false" wrapText="true"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Batal" onAction="#handleDismiss" styleClass="btn-secondary"/>
+        <Button text="Konfirmasi Batalkan Nota" onAction="#handleConfirmCancel" styleClass="btn-danger"/>
+    </HBox>
+
+</VBox>
+
